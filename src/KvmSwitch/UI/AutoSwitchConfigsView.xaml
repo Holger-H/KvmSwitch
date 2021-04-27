@@ -1,0 +1,147 @@
+﻿<UserControl
+    x:Class="KvmSwitch.UI.AutoSwitchConfigsView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:KvmSwitch.UI"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:p="clr-namespace:KvmSwitch.Properties"
+    xmlns:ui="http://schemas.modernwpf.com/2019"
+    d:DataContext="{d:DesignInstance local:AutoSwitchConfigsViewModel,
+                                     IsDesignTimeCreatable=False}"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+    <UserControl.Resources>
+        <Viewbox x:Key="AddIcon" x:Shared="False">
+            <Path Data="M12.126984,0L19.872009,0 19.872009,12.128 32,12.128 32,19.872999 19.872009,19.872999 19.872009,31.999 12.126984,31.999 12.126984,19.872999 0,19.872999 0,12.128 12.126984,12.128z" Fill="{DynamicResource TextControlForeground}" />
+        </Viewbox>
+
+        <Viewbox x:Key="DeleteIcon" x:Shared="False">
+            <Path Data="M15.000001,8.0000272L17,8.0000272 17,27.000028 15.000001,27.000028z M11.000001,8.0000272L13.000001,8.0000272 13.000001,27.000028 11.000001,27.000028z M7.0000005,8.0000272L9.000001,8.0000272 9.000001,27.000028 7.0000005,27.000028z M3.0790101,5.0000274L4.9959994,29.922999 19.000006,30.000026 20.918949,5.0000274z M13.771989,1.9959999L10.198989,2.0000001C10.158989,2.025,9.9989892,2.241,9.9989892,2.6000001L9.9989892,3.0000258 13.998989,3.0000258 13.998989,2.6000001C13.998989,2.241,13.838988,2.025,13.771989,1.9959999z M10.198989,0L13.798988,0C15.031989,0,15.998989,1.142,15.998989,2.6000001L15.998989,3.0000258 23.07898,3.0000258 24,3.0000272 24,5.0000274 22.925121,5.0000274 20.995976,30.076991C20.999027,31.102992,20.100956,32.000026,18.999029,32.000026L4.9990512,32.000026C3.8960255,32.000026,2.9990543,31.102992,2.999054,30.000026L1.073059,5.0000274 0,5.0000274 0,3.0000272 0.91897895,3.0000272 7.9989887,3.0000258 7.9989887,2.6000001C7.9989887,1.142,8.9659892,0,10.198989,0z" Fill="{DynamicResource TextControlForeground}" />
+        </Viewbox>
+
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200" MinWidth="200" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <TextBlock
+                Grid.Row="0"
+                Style="{StaticResource SubtitleTextBlockStyle}"
+                Text="{x:Static p:Resources.Profiles}" />
+            <ListView
+                Grid.Row="1"
+                ItemsSource="{Binding AutoSwitchConfigs}"
+                SelectedItem="{Binding SelectedAutoSwitchConfigViewModel}">
+                <ListView.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Command="{Binding AddConfigCommand}" Header="{x:Static p:Resources.Add}">
+                            <MenuItem.Icon>
+                                <ContentPresenter Content="{StaticResource AddIcon}" />
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem Command="{Binding DeleteConfigCommand}" Header="{x:Static p:Resources.Delete}">
+                            <MenuItem.Icon>
+                                <ContentPresenter Content="{StaticResource DeleteIcon}" />
+                            </MenuItem.Icon>
+                        </MenuItem>
+                    </ContextMenu>
+                </ListView.ContextMenu>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <CheckBox
+                            Content="{Binding Name}"
+                            IsChecked="{Binding Active}"
+                            IsHitTestVisible="False" />
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
+
+        <GridSplitter
+            Grid.Row="0"
+            Grid.RowSpan="2"
+            Grid.Column="0"
+            Width="5" />
+
+        <!--  Add and Delete Profile Button  -->
+        <StackPanel
+            Grid.Row="1"
+            Grid.Column="0"
+            Margin="10,10,20,10"
+            FlowDirection="RightToLeft"
+            Orientation="Horizontal">
+            <Button Command="{Binding DeleteConfigCommand}" ToolTip="{x:Static p:Resources.RemoveProfile}">
+                <ContentPresenter
+                    Height="15"
+                    Margin="2"
+                    Content="{StaticResource DeleteIcon}" />
+            </Button>
+            <Button
+                Margin="10,0,0,0"
+                Command="{Binding AddConfigCommand}"
+                ToolTip="{x:Static p:Resources.AddProfile}">
+                <ContentPresenter
+                    Height="15"
+                    Margin="2"
+                    Content="{StaticResource AddIcon}" />
+            </Button>
+        </StackPanel>
+
+        <Grid
+            Grid.Row="0"
+            Grid.RowSpan="2"
+            Grid.Column="1"
+            Margin="10,5,5,0">
+            <Grid>
+                <Grid.Style>
+                    <Style TargetType="Grid">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding AutoSwitchConfigViewEnabled}" Value="True">
+                                <Setter Property="Visibility" Value="Visible" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding AutoSwitchConfigViewEnabled}" Value="False">
+                                <Setter Property="Visibility" Value="Collapsed" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Grid.Style>
+                <local:AutoSwitchConfigView DataContext="{Binding SelectedAutoSwitchConfigViewModel}" />
+            </Grid>
+            <Grid>
+                <Grid.Style>
+                    <Style TargetType="Grid">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding AutoSwitchConfigViewEnabled}" Value="False">
+                                <Setter Property="Visibility" Value="Visible" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding AutoSwitchConfigViewEnabled}" Value="True">
+                                <Setter Property="Visibility" Value="Collapsed" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Grid.Style>
+                <TextBlock
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Text="{x:Static p:Resources.NoExistingProfile}"
+                    TextWrapping="Wrap" />
+            </Grid>
+        </Grid>
+    </Grid>
+
+</UserControl>

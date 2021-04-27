@@ -1,0 +1,172 @@
+﻿<UserControl
+    x:Class="KvmSwitch.UI.AutoSwitchConfigView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:data="clr-namespace:KvmSwitch.Data"
+    xmlns:local="clr-namespace:KvmSwitch.UI"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:p="clr-namespace:KvmSwitch.Properties"
+    xmlns:ui="http://schemas.modernwpf.com/2019"
+    d:DataContext="{d:DesignInstance local:AutoSwitchConfigViewModel,
+                                     IsDesignTimeCreatable=False}"
+    d:DesignHeight="650"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+    <Grid>
+        <ui:SimpleStackPanel Spacing="10">
+            <TextBox ui:ControlHelper.Header="{x:Static p:Resources.Name}" Text="{Binding Name}" />
+
+            <CheckBox
+                ui:ControlHelper.Description="abc"
+                Content="{x:Static p:Resources.Active}"
+                IsChecked="{Binding Active}" />
+
+            <ComboBox
+                ui:ControlHelper.Description="{x:Static p:Resources.SelectedUsbDeviceDecription}"
+                ui:ControlHelper.Header="{x:Static p:Resources.UsbDevice}"
+                ItemsSource="{Binding UsbDevices}"
+                SelectedItem="{Binding SelectedUsbDevice}">
+
+                <ComboBox.ItemContainerStyle>
+                    <Style TargetType="{x:Type ComboBoxItem}">
+                        <Setter Property="SnapsToDevicePixels" Value="True" />
+                        <Setter Property="OverridesDefaultStyle" Value="True" />
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type ComboBoxItem}">
+                                    <Border
+                                        Name="templateBorder"
+                                        Padding="2"
+                                        SnapsToDevicePixels="true">
+                                        <ContentPresenter>
+                                            <ContentPresenter.Content>
+                                                <Grid d:DataContext="{d:DesignInstance local:UsbDeviceInfoModel, IsDesignTimeCreatable=False}">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="20" />
+                                                        <ColumnDefinition />
+                                                        <ColumnDefinition />
+                                                    </Grid.ColumnDefinitions>
+                                                    <!--  Icons to visualize selected and new Devices  -->
+                                                    <Grid Grid.Column="0">
+                                                        <Grid.Resources>
+                                                            <Style x:Key="baseIconPathStyle" TargetType="Path">
+                                                                <Setter Property="Fill" Value="{DynamicResource TextControlForeground}" />
+                                                                <Setter Property="Stretch" Value="Uniform" />
+                                                                <Setter Property="Height" Value="16" />
+                                                                <Setter Property="Visibility" Value="Collapsed" />
+                                                            </Style>
+                                                        </Grid.Resources>
+                                                        <!--  selected device  -->
+                                                        <Path Data="M28.805753,0L31.974733,0C32.167724,0.27001924 31.208732,0.60900805 30.678737,0.9630113 22.839801,6.2050091 16.330854,13.03398 10.513902,19.745 6.9349381,16.519997 3.7629682,13.021987 0,9.9210077 0.63698797,9.253986 1.4519834,8.7079969 2.4479772,8.2830092 4.1869603,9.2220036 5.6669437,10.081988 7.7689305,11.090989 8.0639258,11.23201 10.055913,12.143997 10.22591,12.136001 10.603912,12.115982 11.617896,10.918992 12.2419,10.401994 16.76185,6.6610023 23.254806,2.4390226 28.805753,0z">
+                                                            <Path.Style>
+                                                                <Style BasedOn="{StaticResource baseIconPathStyle}" TargetType="Path">
+                                                                    <Style.Triggers>
+                                                                        <DataTrigger Binding="{Binding State}" Value="{x:Static local:UsbDeviceState.Active}">
+                                                                            <Setter Property="Visibility" Value="Visible" />
+                                                                        </DataTrigger>
+                                                                        <DataTrigger Binding="{Binding State}" Value="{x:Static local:UsbDeviceState.Existing}">
+                                                                            <Setter Property="Visibility" Value="Collapsed" />
+                                                                        </DataTrigger>
+                                                                    </Style.Triggers>
+                                                                </Style>
+                                                            </Path.Style>
+                                                        </Path>
+                                                        <!--  added/new device  -->
+                                                        <Path Data="M16.001007,0L20.944,10.533997 32,12.223022 23.998993,20.421997 25.889008,32 16.001007,26.533997 6.1109924,32 8,20.421997 0,12.223022 11.057007,10.533997z">
+                                                            <Path.Style>
+                                                                <Style BasedOn="{StaticResource baseIconPathStyle}" TargetType="Path">
+                                                                    <Style.Triggers>
+                                                                        <DataTrigger Binding="{Binding State}" Value="{x:Static local:UsbDeviceState.Added}">
+                                                                            <Setter Property="Visibility" Value="Visible" />
+                                                                        </DataTrigger>
+                                                                        <DataTrigger Binding="{Binding State}" Value="{x:Static local:UsbDeviceState.Existing}">
+                                                                            <Setter Property="Visibility" Value="Collapsed" />
+                                                                        </DataTrigger>
+                                                                    </Style.Triggers>
+                                                                </Style>
+                                                            </Path.Style>
+                                                        </Path>
+                                                    </Grid>
+                                                    <TextBlock
+                                                        Grid.Column="1"
+                                                        Margin="5"
+                                                        Text="{Binding Description}" />
+                                                    <TextBlock
+                                                        Grid.Column="2"
+                                                        Margin="5"
+                                                        Text="{Binding DeviceId}" />
+                                                </Grid>
+                                            </ContentPresenter.Content>
+                                        </ContentPresenter>
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsHighlighted" Value="True">
+                                            <Setter Property="Foreground" Value="{x:Static SystemColors.HighlightTextBrush}" />
+                                            <Setter TargetName="templateBorder" Property="Background" Value="{x:Static SystemColors.HighlightBrush}" />
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </ComboBox.ItemContainerStyle>
+            </ComboBox>
+
+
+            <!--  Monitors  -->
+            <Label Content="{x:Static p:Resources.Monitors}" />
+            <DataGrid
+                ui:ControlHelper.Header="{x:Static p:Resources.Monitors}"
+                AutoGenerateColumns="False"
+                CanUserAddRows="False"
+                ItemsSource="{Binding MonitorInfos}"
+                SelectedItem="{Binding SelectedMonitorInfo}">
+                <DataGrid.Columns>
+                    <DataGridCheckBoxColumn Binding="{Binding UseInProfile}" Header="{x:Static p:Resources.UseInProfile}" />
+                    <DataGridTextColumn Binding="{Binding Name, Mode=OneWay}" Header="{x:Static p:Resources.Name}" />
+                    <DataGridTemplateColumn Width="*" Header="{x:Static p:Resources.Source}">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock
+                                    VerticalAlignment="Center"
+                                    d:DataContext="{d:DesignInstance data:MonitorInfo,
+                                                                     IsDesignTimeCreatable=False}"
+                                    Text="{Binding SelectedMonitorSource.Name}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                        <DataGridTemplateColumn.CellEditingTemplate>
+                            <DataTemplate>
+                                <ComboBox
+                                    d:DataContext="{d:DesignInstance data:MonitorInfo,
+                                                                     IsDesignTimeCreatable=False}"
+                                    IsSynchronizedWithCurrentItem="False"
+                                    ItemsSource="{Binding MonitorSources}"
+                                    SelectedItem="{Binding SelectedMonitorSource}">
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBlock
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"
+                                                Text="{Binding Name}"
+                                                TextAlignment="Center" />
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+                                </ComboBox>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellEditingTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+
+            <!--  Executables  -->
+            <local:PathSelectorControl
+                Margin="0,20,0,0"
+                Header="{x:Static p:Resources.ExecuteOnUsbDeviceConnected}"
+                SelectedPath="{Binding ExecuteOnUsbDeviceConnected}" />
+            <local:PathSelectorControl Header="{x:Static p:Resources.ExecuteOnUsbDeviceDisconnected}" SelectedPath="{Binding ExecuteOnUsbDeviceDisconnected}" />
+
+        </ui:SimpleStackPanel>
+
+    </Grid>
+</UserControl>
