@@ -89,6 +89,12 @@
                             else
                             {
                                 stack.Last().Tags.Add(last);
+                                // ignore whitespace if next char is ")"
+                                if (c == ' ' && i + 1 < input.Length && input[i + 1] == ')')
+                                {
+                                    break;
+                                }
+
                                 stack.Add(new CapabilityTag());
                             }
 
