@@ -100,5 +100,18 @@
             displayCapability.First().Tags[0].Tags[0].Name.Should().Be("1.1");
             displayCapability.First().Tags[1].Name.Should().Be("2");
         }
+
+        [Fact]
+        public void Handles_Whitespace_Before_Closing_Bracket()
+        {
+            const string input = "(A(1 2 ))";
+
+            var displayCapability = CapabilitiesParser.ParseCapabilities(input);
+
+            displayCapability.Count.Should().Be(1);
+            displayCapability.First().Tags.Count.Should().Be(2);
+            displayCapability.First().Tags[0].Name.Should().Be("1");
+            displayCapability.First().Tags[1].Name.Should().Be("2");
+        }
     }
 }
