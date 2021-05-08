@@ -26,8 +26,7 @@ jobs:
       run: dotnet publish src\KvmSwitch\KvmSwitch.csproj /p:PublishProfile=src\KvmSwitch\Properties\PublishProfiles\ToArtifactsFolder.pubxml --no-build
     - name: Pack
       run: cd artifacts & tar -vcf KvmSwitch_${{ secrets.GITHUB_REF }}.zip  KvmSwitch & cd ..
-    - name: Release
-      uses: "marvinpinto/action-automatic-releases@latest"
+    - uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           prerelease: false
