@@ -1,0 +1,45 @@
+name: Release
+
+on:
+  push:
+    tags:
+    - 'v*'
+
+jobs:
+  Prepare:
+
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.201
+    - name: Install dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --configuration Release --no-restore
+    - name: Test
+      run: dotnet test --no-restore --verbosity normal
+    - name: Publish
+      run: dotnet publish src\KvmSwitch\KvmSwitch.csproj /p:PublishProfile=src\KvmSwitch\Properties\PublishProfiles\ToArtifactsFolder.pubxml --no-build
+    - name: Pack
+      run: cd artifacts & tar -vcf KvmSwitch_${{ secrets.GITHUB_REF }}.zip  KvmSwitch & cd ..
+
+  publish_release:
+      steps:
+        - name: Release
+          uses: docker://antonyurchenko/git-release:latest
+          env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            DRAFT_RELEASE: "false"
+            PRE_RELEASE: "false"
+            CHANGELOG_FILE: "CHANGELOG.md"
+            ALLOW_EMPTY_CHANGELOG: "true"
+            ALLOW_TAG_PREFIX: "true"
+          with:
+            args: |
+                artifacts/KvmSwitch*.zip
+
+                
