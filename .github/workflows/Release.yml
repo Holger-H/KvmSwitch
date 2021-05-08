@@ -6,7 +6,7 @@ on:
     - 'v*'
 
 jobs:
-  Prepare & Release:
+  Prepare_and_Release:
 
     runs-on: windows-latest
 
