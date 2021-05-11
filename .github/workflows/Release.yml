@@ -28,9 +28,9 @@ jobs:
     - name: Publish
       run: dotnet publish src\KvmSwitch\KvmSwitch.csproj /p:PublishProfile=src\KvmSwitch\Properties\PublishProfiles\ToArtifactsFolder.pubxml --no-build
     - name: Pack
-      run: cd artifacts & tar -vcf KvmSwitch_${{ github.event.inputs.Version }}.zip  KvmSwitch & cd ..
+      run: cd artifacts | tar -vcf KvmSwitch_${{ github.event.inputs.Version }}.zip  KvmSwitch | cd ..
     - name: Info
-      run: dir & dir artifacts
+      run: dir | dir artifacts
     - name: Automatic Releases
       uses: "marvinpinto/action-automatic-releases@latest"
       with:
