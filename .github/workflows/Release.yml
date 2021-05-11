@@ -27,6 +27,8 @@ jobs:
       run: dotnet test --no-restore --verbosity normal
     - name: Publish
       run: dotnet publish src\KvmSwitch\KvmSwitch.csproj /p:PublishProfile=src\KvmSwitch\Properties\PublishProfiles\ToArtifactsFolder.pubxml --no-build
+    - name: Info_Pre
+      run: dir | dir artifacts
     - name: Pack
       run: cd artifacts | tar -vcf KvmSwitch_${{ github.event.inputs.Version }}.zip  KvmSwitch | cd ..
     - name: Info
