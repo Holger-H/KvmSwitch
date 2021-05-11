@@ -26,9 +26,12 @@ jobs:
     - name: Test
       run: dotnet test --no-restore --verbosity normal
     - name: Publish
-      run: dotnet publish src\KvmSwitch\KvmSwitch.csproj /p:PublishProfile=src\KvmSwitch\Properties\PublishProfiles\ToArtifactsFolder.pubxml --no-build
+      run: dotnet publish src\KvmSwitch\KvmSwitch.csproj -c Release -o artifacts\KvmSwitch --no-build
     - name: Pack
-      run: cd artifacts & tar -vcf KvmSwitch_${{ github.event.inputs.Version }}.zip  KvmSwitch & cd ..
+      run: |
+        cd artifacts
+        tar -vcf KvmSwitch_${{ github.event.inputs.Version }}.zip  KvmSwitch
+        cd ..
     - name: Automatic Releases
       uses: "marvinpinto/action-automatic-releases@latest"
       with:
@@ -36,4 +39,4 @@ jobs:
         prerelease: false
         automatic_release_tag: ${{ github.event.inputs.Version }}
         files: |
-          artifacts\KvmSwitch*.zip          
+          artifacts/KvmSwitch_${{ github.event.inputs.Version }}.zip          
