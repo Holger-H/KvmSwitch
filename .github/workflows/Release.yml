@@ -43,4 +43,4 @@ jobs:
         prerelease: false
         automatic_release_tag: ${{ github.event.inputs.Version }}
         files: |
-          artifacts\KvmSwitch_${{ github.event.inputs.Version }}.zip          
+          artifacts/KvmSwitch_${{ github.event.inputs.Version }}.zip          
