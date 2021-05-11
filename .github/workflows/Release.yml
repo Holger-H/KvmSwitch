@@ -30,7 +30,7 @@ jobs:
     - name: Pack
       run: cd artifacts & tar -vcf KvmSwitch_${{ github.event.inputs.Version }}.zip  KvmSwitch & cd ..
     - name: Info
-      run: dir artifacts
+      run: dir & dir artifacts
     - name: Automatic Releases
       uses: "marvinpinto/action-automatic-releases@latest"
       with:
