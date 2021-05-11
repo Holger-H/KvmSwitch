@@ -6,7 +6,7 @@ on:
       Version:
         description: 'Version to release'     
         required: true
-        default: 'v1.X.X'
+        default: 'vX.X.X'
 
 jobs:
   Prepare_and_Release:
