@@ -1,8 +1,8 @@
 ﻿namespace KvmSwitch
 {
-    using System;
     using KvmSwitch.Data;
     using KvmSwitch.Hardware;
+    using System;
 
     public interface IKvmSwitchEnvironment : IDisposable
     {

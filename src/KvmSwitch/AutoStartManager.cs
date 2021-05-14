@@ -1,8 +1,8 @@
 ﻿namespace KvmSwitch
 {
-    using System.Reflection;
     using log4net;
     using Microsoft.Win32;
+    using System.Reflection;
 
     internal class AutoStartManager
     {

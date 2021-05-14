@@ -1,9 +1,9 @@
 ﻿namespace KvmSwitch.UI
 {
+    using Data;
     using System.Collections.Generic;
     using System.Globalization;
     using System.Linq;
-    using Data;
 
     public class GeneralConfigViewModel : ViewModelBase
     {
@@ -34,7 +34,7 @@
             this.AutoSwitchConfigHotkey = config.AutoSwitchConfigHotkey;
             this.AutoStart = config.AutoStart;
 
-            this.Cultures = new List<CultureInfo> {new CultureInfo("de"), new CultureInfo("en")};
+            this.Cultures = new List<CultureInfo> { new CultureInfo("de"), new CultureInfo("en") };
 
             if (!string.IsNullOrEmpty(config.Culture))
             {

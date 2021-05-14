@@ -1,14 +1,14 @@
 ﻿namespace KvmSwitch.Hardware
 {
+    using KvmSwitch.Data;
+    using KvmSwitch.Hardware.DDC;
+    using KvmSwitch.Native;
+    using log4net;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Runtime.InteropServices;
     using System.Text;
-    using KvmSwitch.Data;
-    using KvmSwitch.Hardware.DDC;
-    using KvmSwitch.Native;
-    using log4net;
 
     internal class DisplayDataChannel : IDisplayDataChannel
     {
@@ -265,7 +265,7 @@
                 return this.monitorSourcesByPhysicalMonitor[hMonitor];
             }
 
-            var values = new int[0];
+            var values = Array.Empty<int>();
 
             Dxva2.GetCapabilitiesStringLength(hMonitor, out var strSize);
 
@@ -294,7 +294,7 @@
             }
             else
             {
-                sourceNames = new string[0];
+                sourceNames = Array.Empty<string>();
             }
 
             var sources = new List<MonitorSource>();

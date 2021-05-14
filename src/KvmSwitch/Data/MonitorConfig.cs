@@ -1,4 +1,5 @@
-﻿namespace KvmSwitch.Data
+﻿
+namespace KvmSwitch.Data
 {
     public class MonitorConfig
     {

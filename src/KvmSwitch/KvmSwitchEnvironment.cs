@@ -1,12 +1,12 @@
 ﻿namespace KvmSwitch
 {
+    using KvmSwitch.Data;
+    using KvmSwitch.Hardware;
+    using log4net;
     using System;
     using System.Globalization;
     using System.Linq;
     using System.Threading;
-    using KvmSwitch.Data;
-    using KvmSwitch.Hardware;
-    using log4net;
 
     internal class KvmSwitchEnvironment : IKvmSwitchEnvironment
     {
@@ -39,7 +39,7 @@
 
         public void SaveConfiguration(Config config)
         {
-            if(this.autoSwitchConfigHotkeyId.HasValue)
+            if (this.autoSwitchConfigHotkeyId.HasValue)
             {
                 this.HotKeyManager.UnregisterHotKey(this.autoSwitchConfigHotkeyId.Value);
             }

@@ -1,8 +1,8 @@
 ﻿namespace KvmSwitch.Hardware
 {
+    using KvmSwitch.Data;
     using System;
     using System.Collections.Generic;
-    using KvmSwitch.Data;
 
     public interface IDisplayDataChannel : IDisposable
     {

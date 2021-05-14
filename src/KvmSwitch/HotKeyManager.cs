@@ -1,5 +1,7 @@
 ﻿namespace KvmSwitch
 {
+    using KvmSwitch.Native;
+    using log4net;
     using System;
     using System.Collections.Generic;
     using System.Threading;
@@ -7,14 +9,12 @@
     using System.Windows.Forms;
     using System.Windows.Input;
     using System.Windows.Interop;
-    using KvmSwitch.Native;
-    using log4net;
 
     /// <summary>
     ///     Manages global HotKeys.
     /// </summary>
     /// <seealso cref="IDisposable" />
-    internal sealed class HotKeyManager: IDisposable
+    internal sealed class HotKeyManager : IDisposable
     {
         private readonly ILog log = LogManager.GetLogger(typeof(HotKeyManager));
         private readonly List<int> registeredHotKeyIds = new();
@@ -27,9 +27,9 @@
         /// </summary>
         public HotKeyManager()
         {
-            this.messageWindow = new MessageWindow(this.windowReadyEvent, (args)=> this.OnHotKeyPressed(args));
+            this.messageWindow = new MessageWindow(this.windowReadyEvent, (args) => this.OnHotKeyPressed(args));
         }
-                
+
         public event EventHandler<HotKeyEventArgs> HotKeyPressed;
 
         /// <summary>
@@ -61,7 +61,7 @@
                     result = id;
                 }
             });
-            
+
             return result;
         }
 
@@ -138,7 +138,7 @@
             {
                 this.hwndSource.RemoveHook(this.HwndHook);
                 this.hwndSource = null;
-                
+
                 base.OnClosed(e);
             }
 
@@ -146,19 +146,19 @@
             {
                 const int WM_HOTKEY = 0x0312;
 
-                if(msg != WM_HOTKEY)
+                if (msg != WM_HOTKEY)
                 {
                     return IntPtr.Zero;
                 }
                 this.callback(new HotKeyEventArgs(lParam));
-             
+
                 return IntPtr.Zero;
             }
-            
+
         }
 
-        
 
-        
+
+
     }
 }
