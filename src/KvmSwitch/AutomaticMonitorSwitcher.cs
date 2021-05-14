@@ -1,13 +1,13 @@
 ﻿namespace KvmSwitch
 {
+    using KvmSwitch.Data;
+    using KvmSwitch.Hardware;
+    using log4net;
     using System;
     using System.Diagnostics;
     using System.IO;
     using System.Linq;
     using System.Threading.Tasks;
-    using KvmSwitch.Data;
-    using KvmSwitch.Hardware;
-    using log4net;
 
     internal class AutomaticMonitorSwitcher
     {

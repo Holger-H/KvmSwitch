@@ -1,9 +1,9 @@
 ﻿namespace KvmSwitch.UI
 {
+    using Data;
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Input;
-    using Data;
 
     /// <summary>
     /// Interaction logic for HotkeyEditorControl.xaml

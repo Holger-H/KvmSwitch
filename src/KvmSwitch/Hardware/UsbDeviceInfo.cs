@@ -1,4 +1,5 @@
-﻿namespace KvmSwitch.Hardware
+﻿
+namespace KvmSwitch.Hardware
 {
     public class UsbDeviceInfo
     {

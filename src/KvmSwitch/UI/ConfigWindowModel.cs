@@ -1,8 +1,8 @@
 ﻿namespace KvmSwitch.UI
 {
+    using KvmSwitch.Data;
     using System.Windows;
     using System.Windows.Input;
-    using KvmSwitch.Data;
 
     /// <summary>
     ///     ViewModel for the <see cref="ConfigWindow" />.
@@ -23,7 +23,7 @@
             this.AutoSwitchConfigsViewModel = new AutoSwitchConfigsViewModel(environment.Config.AutoSwitchConfigs, environment);
 
             this.SaveCommand = new RelayCommand(window => this.SaveConfiguration((Window)window));
-            this.CancelCommand = new RelayCommand(window => this.Cancel((Window)window));          
+            this.CancelCommand = new RelayCommand(window => Cancel((Window)window));
         }
 
         public GeneralConfigViewModel GeneralConfigViewModel { get; }
@@ -51,7 +51,7 @@
             window.Close();
         }
 
-        private void Cancel(Window window)
+        private static void Cancel(Window window)
         {
             window.DialogResult = false;
             window.Close();

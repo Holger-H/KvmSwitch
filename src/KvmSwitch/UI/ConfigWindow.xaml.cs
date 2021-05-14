@@ -10,6 +10,6 @@
         public ConfigWindow()
         {
             this.InitializeComponent();
-        }      
+        }
     }
 }

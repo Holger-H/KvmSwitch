@@ -11,14 +11,19 @@
         [Fact]
         public void Ctor_Does_Not_Throw_If_Capabilities_Are_Null()
         {
+#pragma warning disable CA1806 // Do not ignore method results
             var action = new Action(() => new DisplayCapabilities(null));
+#pragma warning restore CA1806 // Do not ignore method results
             action.Should().NotThrow();
         }
 
         [Fact]
         public void Ctor_Does_Not_Throw_If_Capabilities_Are_Empty()
         {
-            var action = new Action(() => new DisplayCapabilities(new List<CapabilityTag>()));
+            var action = new Action(() =>
+            {
+                var displayCapabilities = new DisplayCapabilities(new List<CapabilityTag>());
+            });
             action.Should().NotThrow();
         }
 

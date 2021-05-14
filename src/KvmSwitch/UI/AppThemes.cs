@@ -1,7 +1,7 @@
 ﻿namespace KvmSwitch.UI
 {
-    using System.Collections.Generic;
     using ModernWpf;
+    using System.Collections.Generic;
 
     public class AppThemes : List<AppTheme>
     {

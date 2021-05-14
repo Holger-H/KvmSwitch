@@ -1,11 +1,11 @@
 ﻿namespace KvmSwitch.UI
 {
+    using KvmSwitch.Data;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.ComponentModel;
     using System.Linq;
     using System.Windows.Input;
-    using KvmSwitch.Data;
 
     public class AutoSwitchConfigsViewModel : ViewModelBase
     {

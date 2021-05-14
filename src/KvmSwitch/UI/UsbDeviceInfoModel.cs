@@ -1,8 +1,8 @@
 ﻿namespace KvmSwitch.UI
 {
+    using KvmSwitch.Hardware;
     using System.ComponentModel;
     using System.Runtime.CompilerServices;
-    using KvmSwitch.Hardware;
 
     public class UsbDeviceInfoModel : UsbDeviceInfo, INotifyPropertyChanged
     {

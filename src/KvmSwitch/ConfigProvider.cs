@@ -1,9 +1,9 @@
 ﻿namespace KvmSwitch
 {
-    using System.IO;
     using KvmSwitch.Data;
     using log4net;
     using Newtonsoft.Json;
+    using System.IO;
 
     internal class ConfigProvider
     {

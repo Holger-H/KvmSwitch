@@ -1,4 +1,5 @@
-﻿namespace KvmSwitch.UI
+﻿
+namespace KvmSwitch.UI
 {
     public enum UsbDeviceState
     {
